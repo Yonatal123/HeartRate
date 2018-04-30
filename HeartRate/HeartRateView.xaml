@@ -1,14 +1,17 @@
 <Window x:Class="HeartRate.HeartRateView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:HeartRate">
+    <Window.Resources>
+        <local:BmpsToSegmentsConverter x:Key="BpmsToSegmentsConverter"/>
+    </Window.Resources>
     <Grid Background="White">
-        <Border Height="100" Width="100" BorderBrush="Black" BorderThickness="1">
-            <Canvas Background="Pink">
+        <Border Height="300" Width="500" BorderBrush="Black" BorderThickness="1">
+            <Canvas Background="Black">
                 <Canvas.LayoutTransform>
                     <ScaleTransform ScaleY="-1"/>
                 </Canvas.LayoutTransform>
-                <ItemsControl ItemsSource="{Binding Segments}">
+                <ItemsControl ItemsSource="{Binding Bpms, Converter={StaticResource BpmsToSegmentsConverter}}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Canvas/>
@@ -16,7 +19,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Line X1="{Binding From.X}" Y1="{Binding From.Y}" X2="{Binding To.X}" Y2="{Binding To.Y}" Stroke="Red"/>
+                            <Line X1="{Binding From.X}" Y1="{Binding From.Y}" X2="{Binding To.X}" Y2="{Binding To.Y}" Stroke="Green"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
