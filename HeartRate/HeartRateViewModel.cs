@@ -1,15 +1,11 @@
-﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
-namespace HeartRate
-{
-    public class HeartRateMonitorViewModel
+namespace HeartRate {
+    public class HeartRateViewModel : Caliburn.Micro.PropertyChangedBase, IHeartRate
     {
-        public HeartRateMonitorViewModel(IHeartRateListener p_heartRateListener)
+        public HeartRateViewModel(IHeartRateListener p_heartRateListener)
         {
             var Points = new Point[]
             {
@@ -29,6 +25,4 @@ namespace HeartRate
         public Point From { get; set; }
         public Point To { get; set; }
     }
-
-
 }
