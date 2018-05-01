@@ -4,14 +4,45 @@
         xmlns:local="clr-namespace:HeartRate">
     <Window.Resources>
         <local:BmpsToSegmentsConverter x:Key="BpmsToSegmentsConverter"/>
+        <local:PointToMarginConverter x:Key="PointToMarginConverter"/>
     </Window.Resources>
     <Grid Background="White">
-        <Border Height="300" Width="500" BorderBrush="Black" BorderThickness="1">
+        <Border x:Name="GraphBorder" Height="300" Width="500" BorderBrush="Black" BorderThickness="1">
             <Canvas Background="Black">
                 <Canvas.LayoutTransform>
                     <ScaleTransform ScaleY="-1"/>
                 </Canvas.LayoutTransform>
-                <ItemsControl ItemsSource="{Binding Bpms, Converter={StaticResource BpmsToSegmentsConverter}}">
+                <ItemsControl>
+                    <ItemsControl.ItemsSource>
+                    <MultiBinding Converter="{StaticResource BpmsToSegmentsConverter}">
+                        <Binding Path="MaxValue"/>
+                        <Binding Path="MinValue"/>
+                        <Binding ElementName="GraphBorder" Path="ActualHeight"/>
+                        <Binding ElementName="GraphBorder" Path="ActualWidth"/>
+                        <Binding Path="Bpms"/>
+                    </MultiBinding>
+                </ItemsControl.ItemsSource>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Line X1="{Binding From.X}" Y1="{Binding From.Y}" X2="{Binding To.X}" Y2="{Binding To.Y}" Stroke="Green"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+                <ItemsControl>
+                    <ItemsControl.ItemsSource>
+                        <MultiBinding Converter="{StaticResource BpmsToSegmentsConverter}">
+                            <Binding Path="MaxValue"/>
+                            <Binding Path="MinValue"/>
+                            <Binding ElementName="GraphBorder" Path="ActualHeight"/>
+                            <Binding ElementName="GraphBorder" Path="ActualWidth"/>
+                            <Binding Path="Bpms"/>
+                        </MultiBinding>
+                    </ItemsControl.ItemsSource>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Canvas/>
@@ -19,7 +50,8 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Line X1="{Binding From.X}" Y1="{Binding From.Y}" X2="{Binding To.X}" Y2="{Binding To.Y}" Stroke="Green"/>
+                            <Border CornerRadius="5" Width="10" Height="10" Background="Orange"
+                                    Margin="{Binding Converter={StaticResource PointToMarginConverter}}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

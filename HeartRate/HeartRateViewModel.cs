@@ -24,12 +24,22 @@ namespace HeartRate
             Bpms.Add(83);
             Bpms.Add(94);
             Bpms.Add(76);
-            Bpms.Add(112);
+            Bpms.Add(125);
             Bpms.Add(50);
         }
 
         public IList<int> Bpms { get; set; }
         public IList<Segment> Segments { get; set; }
+
+        public int MaxValue
+        {
+            get { return 200; }
+        }
+
+        public int MinValue
+        {
+            get { return 50; }
+        }
     }
 
     public class Segment

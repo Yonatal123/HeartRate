@@ -9,23 +9,30 @@ using System.Windows.Data;
 
 namespace HeartRate
 {
-    public class BmpsToSegmentsConverter : IValueConverter
+    public class BmpsToSegmentsConverter : IMultiValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            IList<int> bpms = (IList<int>)value;
+            int maxValue = (int) values[0];
+            int minValue = (int)values[1];
+            double graphHeight = (double)values[2];
+            double graphWidth = (double)values[3];
+            IList<int> bpms = (List<int>)values[4];
+
+            int valuesRange = maxValue - minValue;
             IList<Segment> segments = new List<Segment>();
             IList<Point> normalizedToGraphBpms = new List<Point>();
-            for(int i = 0; i < bpms.Count; i++)
+            for (int i = 0; i < bpms.Count; i++)
             {
                 Point point = new Point();
-                if(i == 0)
+                if (i == 0)
                 {
-                     point = new Point(0, bpms[i] * (300 / 150));  
+                    point = new Point(0, (bpms[i] - minValue) * (graphHeight / valuesRange));
                 }
                 else
                 {
-                    point = new Point(normalizedToGraphBpms[i-1].X + 500 / bpms.Count, bpms[i] * (300 / 150));
+                    point = new Point(normalizedToGraphBpms[i - 1].X + (graphWidth / (bpms.Count - 1)), (bpms[i] - minValue) * (graphHeight / valuesRange));
                 }
                 normalizedToGraphBpms.Add(point);
             }
@@ -33,7 +40,8 @@ namespace HeartRate
             return segments;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
