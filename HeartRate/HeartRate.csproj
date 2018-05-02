@@ -87,18 +87,28 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
-    <Compile Include="HRDataToLeftMarginConverter.cs" />
-    <Compile Include="HRDataToSegmentsConverter.cs" />
-    <Compile Include="HRDataToPointsConverter.cs" />
-    <Compile Include="HRDataToTimeDisplayConverter.cs" />
-    <Compile Include="IHeartRate.cs" />
-    <Compile Include="HeartRateViewModel.cs" />
+    <Compile Include="Config\ConfigReader.cs" />
+    <Compile Include="Config\UIConfig.cs" />
+    <Compile Include="Config\UIConfig.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>UIConfig.json</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Converters\HRDataToLeftMarginConverter.cs" />
+    <Compile Include="Converters\HRDataToSegmentsConverter.cs" />
+    <Compile Include="Converters\HRDataToPointsConverter.cs" />
+    <Compile Include="Converters\HRDataToTimeDisplayConverter.cs" />
+    <Compile Include="Converters\IndexToScaleValuesConveter.cs" />
+    <Compile Include="Converters\IndexToTopMarginConverter.cs" />
+    <Compile Include="Views\IHeartRate.cs" />
+    <Compile Include="ViewModels\HeartRateViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HeartRateListener.cs" />
-    <Compile Include="IHeartRateListener.cs" />
-    <Compile Include="PointToMarginConverter.cs" />
-    <Compile Include="PointToMarginLeftConverter.cs" />
+    <Compile Include="Listener\HeartRateListener.cs" />
+    <Compile Include="Listener\IHeartRateListener.cs" />
+    <Compile Include="Converters\PointToMarginConverter.cs" />
+    <Compile Include="Converters\IndexToMarginLeftConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -116,6 +126,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Content Include="Config\UIConfig.json">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>UIConfig.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -126,7 +141,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="HeartRateView.xaml">
+    <Page Include="Views\HeartRateView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

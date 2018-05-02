@@ -6,16 +6,15 @@
         <local:HRDataToSegmentsConverter x:Key="HRDataToSegmentsConverter"/>
         <local:PointToMarginConverter x:Key="PointToMarginConverter"/>
         <local:HRDataToPointsConverter x:Key="HRDataToPointsConverter"/>
-        <local:PointToMarginLeftConverter x:Key="PointToMarginLeftConverter"/>
+        <local:IndexToMarginLeftConverter x:Key="IndexToMarginLeftConverter"/>
         <local:HRDataToTimeDisplayConverter x:Key="HRDataToTimeDisplayConverter"/>
         <local:HRDataToLeftMarginConverter x:Key="HRDataToLeftMarginConverter"/>
+        <local:IndexToScaleValuesConveter x:Key="IndexToScaleValuesConverter"/>
+        <local:IndexToTopMarginConverter x:Key="IndexToTopMarginConverter"/>
     </Window.Resources>
     <Grid Background="White">
         <Border x:Name="GraphBorder" Height="300" Width="500" BorderBrush="Black" BorderThickness="1">
             <Canvas Background="Black">
-                <!--<Canvas.LayoutTransform>
-                    <ScaleTransform ScaleY="-1"/>
-                </Canvas.LayoutTransform>-->
                 <ItemsControl>
                     <ItemsControl.ItemsSource>
                     <MultiBinding Converter="{StaticResource HRDataToSegmentsConverter}">
@@ -24,7 +23,8 @@
                         <Binding ElementName="GraphBorder" Path="ActualHeight"/>
                         <Binding ElementName="GraphBorder" Path="ActualWidth"/>
                         <Binding Path="HRData"/>
-                    </MultiBinding>
+                        <Binding Path="NumOfVisibleItems"/>
+                   </MultiBinding>
                 </ItemsControl.ItemsSource>
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -37,16 +37,7 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
               </ItemsControl>
-                <ItemsControl>
-                    <ItemsControl.ItemsSource>
-                        <MultiBinding Converter="{StaticResource HRDataToPointsConverter}">
-                            <Binding Path="MaxValue"/>
-                            <Binding Path="MinValue"/>
-                            <Binding ElementName="GraphBorder" Path="ActualHeight"/>
-                            <Binding ElementName="GraphBorder" Path="ActualWidth"/>
-                            <Binding Path="HRData"/>
-                        </MultiBinding>
-                    </ItemsControl.ItemsSource>
+                <ItemsControl ItemsSource="{Binding TotalIndicesList}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Canvas/>
@@ -54,8 +45,57 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Width="1" Height="{Binding ElementName=GraphBorder, Path=ActualHeight}" Background="Cyan"
-                                    Margin="{Binding Converter={StaticResource PointToMarginLeftConverter}}"/>
+                            <Border Width="1" Height="{Binding ElementName=GraphBorder, Path=ActualHeight}" Background="Cyan">
+                                <Border.Margin>
+                                    <MultiBinding Converter="{StaticResource IndexToMarginLeftConverter}">
+                                        <Binding/>
+                                        <Binding ElementName="GraphBorder" Path="ActualWidth"/>
+                                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, 
+                                                 AncestorType={x:Type ItemsControl}}" Path="DataContext.NumOfVisibleItems"/>
+                                    </MultiBinding>
+                                </Border.Margin>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl ItemsSource="{Binding TotalIndicesList}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Foreground="Red" Width="25" FontSize="14" HorizontalAlignment="Right">
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource IndexToScaleValuesConverter}">
+                                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, 
+                                                 AncestorType={x:Type ItemsControl}}" Path="DataContext.NumOfVisibleItems"/>
+                                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, 
+                                                 AncestorType={x:Type ItemsControl}}" Path="DataContext.MaxValue"/>
+                                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, 
+                                                 AncestorType={x:Type ItemsControl}}" Path="DataContext.MinValue"/>
+                                            <Binding/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <Border Width="{Binding ElementName=GraphBorder, Path=ActualWidth}" Height="1" 
+                                        Background="Cyan" Margin="5, 0, 0, 0"/>
+                                <StackPanel.Margin>
+                                    <MultiBinding Converter="{StaticResource IndexToTopMarginConverter}">
+                                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, 
+                                                 AncestorType={x:Type ItemsControl}}" Path="DataContext.NumOfVisibleItems"/>
+                                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, 
+                                                 AncestorType={x:Type ItemsControl}}" Path="DataContext.MaxValue"/>
+                                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, 
+                                                 AncestorType={x:Type ItemsControl}}" Path="DataContext.MinValue"/>
+                                        <Binding/>
+                                        <Binding ElementName="GraphBorder" Path="ActualHeight"/>
+                                        <Binding/>
+                                    </MultiBinding>
+                                </StackPanel.Margin>
+                            </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -67,6 +107,7 @@
                             <Binding ElementName="GraphBorder" Path="ActualHeight"/>
                             <Binding ElementName="GraphBorder" Path="ActualWidth"/>
                             <Binding Path="HRData"/>
+                            <Binding Path="NumOfVisibleItems"/>
                         </MultiBinding>
                     </ItemsControl.ItemsSource>
                     <ItemsControl.ItemsPanel>
@@ -93,8 +134,8 @@
                                        Width="50" FontSize="14" Foreground="Red">
                                 <TextBlock.Margin>
                                     <MultiBinding Converter="{StaticResource HRDataToLeftMarginConverter}">
-                                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}" 
-                                                 Path="Items.Count"/>
+                                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, 
+                                                 AncestorType={x:Type ItemsControl}}" Path="DataContext.NumOfVisibleItems"/>
                                         <Binding />
                                         <Binding ElementName="GraphBorder" Path="ActualWidth"/>
                                         <Binding ElementName="GraphBorder" Path="ActualHeight"/>

@@ -13,13 +13,11 @@ namespace HeartRate
     {
         public void Start()
         {
-            m_timer.Interval = 10000;
+            m_timer.Interval = 3000;
             m_timer.Elapsed += onTimerTick;
             m_timer.Enabled = true;
             Task.Factory.StartNew(createHrData);
         }
-
-
 
         public IObservable<HRData> HrDataReceived
         {
@@ -45,7 +43,7 @@ namespace HeartRate
         }
 
 
-        private ISubject<HRData> m_hrSubject;
+        private ISubject<HRData> m_hrSubject = new Subject<HRData>();
         private Timer m_timer = new Timer();
     }
 }

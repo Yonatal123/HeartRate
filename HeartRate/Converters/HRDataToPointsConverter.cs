@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Collections.ObjectModel;
 
 namespace HeartRate
 {
@@ -17,8 +18,9 @@ namespace HeartRate
             int minValue = (int)values[1];
             double graphHeight = (double)values[2];
             double graphWidth = (double)values[3];
-            IList<HRData> hrData = (List<HRData>)values[4];
-
+            ObservableCollection<HRData> hrData = (ObservableCollection<HRData>)values[4];
+            int numOfVisibleItems = (int)values[5];
+        
             IList<int> bpms = new List<int>();
             for (int hrDataIndex = 0; hrDataIndex < hrData.Count; hrDataIndex++)
             {
@@ -36,7 +38,7 @@ namespace HeartRate
                 }
                 else
                 {
-                    point = new Point(normalizedToGraphBpms[i - 1].X + (graphWidth / (bpms.Count - 1)), 
+                    point = new Point(normalizedToGraphBpms[i - 1].X + (graphWidth / (numOfVisibleItems - 1)), 
                         graphHeight - ((bpms[i] - minValue) * (graphHeight / valuesRange)));
                 }
                 normalizedToGraphBpms.Add(point);
