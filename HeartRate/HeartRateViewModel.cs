@@ -7,17 +7,21 @@ namespace HeartRate
 {
     public class HeartRateViewModel : Caliburn.Micro.PropertyChangedBase, IHeartRate
     {
+        private IObserver<HRData> onHrDataRecived;
+
         public HeartRateViewModel(IHeartRateListener p_heartRateListener)
         {
             HRData = new List<HRData>();
-            HRData.Add(new HRData(200, DateTime.Now, 0));
-            HRData.Add(new HRData(58, DateTime.Now, 1));
-            HRData.Add(new HRData(67, DateTime.Now, 2));
-            HRData.Add(new HRData(83, DateTime.Now, 3));
-            HRData.Add(new HRData(94, DateTime.Now, 4));
-            HRData.Add(new HRData(76, DateTime.Now, 5));
-            HRData.Add(new HRData(125, DateTime.Now, 6));
-            HRData.Add(new HRData(50, DateTime.Now, 7));
+            p_heartRateListener.HrDataReceived.Subscribe(onHrDataRecived);
+            //HRData.Add(new HRData(200, DateTime.Now));
+
+            //HRData.Add(new HRData(58, DateTime.Now));
+            //HRData.Add(new HRData(67, DateTime.Now));
+            //HRData.Add(new HRData(83, DateTime.Now));
+            //HRData.Add(new HRData(94, DateTime.Now));
+            //HRData.Add(new HRData(76, DateTime.Now));
+            //HRData.Add(new HRData(125, DateTime.Now));
+            //HRData.Add(new HRData(50, DateTime.Now));
         }
 
         public IList<HRData> HRData { get; set; }
@@ -31,6 +35,26 @@ namespace HeartRate
         {
             get { return 50; }
         }
+
+        private void onHrDataReceived(HRData p_hrData)
+        {
+
+            IList<HRData> hrDataList = new List<HRData>();
+            int index = 0;
+            if (m_counter == 9)
+            {
+                index = 1;
+            }
+
+
+
+            HRData hrData = new HRData(p_hrData.Bpm, p_hrData.Time);
+            hrData.Index = m_counter;
+            HRData.Add(hrData);
+            m_counter++;
+        }
+
+        private int m_counter;
     }
 
     public class Segment
@@ -41,11 +65,10 @@ namespace HeartRate
 
     public class HRData
     {
-        public HRData(int p_bpm, DateTime p_dateTime, int p_index)
+        public HRData(int p_bpm, DateTime p_dateTime)
         {
             Bpm = p_bpm;
             Time = p_dateTime;
-            Index = p_index;
         }
         public int Bpm { get; set; }
         public DateTime Time { get; set; }

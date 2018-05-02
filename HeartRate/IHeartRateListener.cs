@@ -8,6 +8,7 @@ namespace HeartRate
 {
     public interface IHeartRateListener
     {
-        int Bmp { get; set; }
+        void Start();
+        IObservable<HRData> HrDataReceived { get; }
     }
 }

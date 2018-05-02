@@ -14,7 +14,7 @@ namespace HeartRate
         {
             HRData hrData = (HRData)value;
 
-            return hrData.Time.Minute.ToString() + ":" + hrData.Time.Second.ToString();
+            return hrData.Time.Hour.ToString() + ":" + hrData.Time.Minute.ToString() + "." + hrData.Time.Second.ToString();
 
         }
 

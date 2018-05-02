@@ -17,13 +17,14 @@ namespace HeartRate
             var item = (HRData)values[1];
             int itemIndex = item.Index;
             double graphWidth = (double)values[2];
+            double graphHeight = (double)values[3];
 
             if(itemIndex == 0)
             {
-                return new Thickness(0, 0, 0, 0);
+                return new Thickness(-15, graphHeight, 0, 0);
             }
-            double leftMargin = (graphWidth / itemsCount - 1) * itemIndex;
-            return new Thickness(leftMargin, 0, 0, 0);
+            double leftMargin = (graphWidth / (itemsCount - 1)) * itemIndex;
+            return new Thickness(leftMargin - 15, graphHeight, 0, 0);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

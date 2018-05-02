@@ -13,9 +13,9 @@
     <Grid Background="White">
         <Border x:Name="GraphBorder" Height="300" Width="500" BorderBrush="Black" BorderThickness="1">
             <Canvas Background="Black">
-                <Canvas.LayoutTransform>
+                <!--<Canvas.LayoutTransform>
                     <ScaleTransform ScaleY="-1"/>
-                </Canvas.LayoutTransform>
+                </Canvas.LayoutTransform>-->
                 <ItemsControl>
                     <ItemsControl.ItemsSource>
                     <MultiBinding Converter="{StaticResource HRDataToSegmentsConverter}">
@@ -97,6 +97,7 @@
                                                  Path="Items.Count"/>
                                         <Binding />
                                         <Binding ElementName="GraphBorder" Path="ActualWidth"/>
+                                        <Binding ElementName="GraphBorder" Path="ActualHeight"/>
                                     </MultiBinding>
                                 </TextBlock.Margin>
                             </TextBlock>
