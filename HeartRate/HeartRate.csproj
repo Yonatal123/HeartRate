@@ -83,7 +83,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
-    <Compile Include="BmpsToSegmentsConverter.cs" />
+    <Compile Include="HRDataToLeftMarginConverter.cs" />
+    <Compile Include="HRDataToSegmentsConverter.cs" />
+    <Compile Include="HRDataToPointsConverter.cs" />
+    <Compile Include="HRDataToTimeDisplayConverter.cs" />
     <Compile Include="IHeartRate.cs" />
     <Compile Include="HeartRateViewModel.cs" />
   </ItemGroup>
@@ -91,6 +94,7 @@
     <Compile Include="HeartRateListener.cs" />
     <Compile Include="IHeartRateListener.cs" />
     <Compile Include="PointToMarginConverter.cs" />
+    <Compile Include="PointToMarginLeftConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

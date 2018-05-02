@@ -9,7 +9,7 @@ using System.Windows.Data;
 
 namespace HeartRate
 {
-    public class BmpsToSegmentsConverter : IMultiValueConverter
+    public class HRDataToSegmentsConverter : IMultiValueConverter
     {
         
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -18,7 +18,13 @@ namespace HeartRate
             int minValue = (int)values[1];
             double graphHeight = (double)values[2];
             double graphWidth = (double)values[3];
-            IList<int> bpms = (List<int>)values[4];
+            IList<HRData> hrData = (List<HRData>)values[4];
+
+            IList<int> bpms = new List<int>();
+            for(int hrDataIndex = 0; hrDataIndex < hrData.Count; hrDataIndex ++)
+            {
+                bpms.Add(hrData[hrDataIndex].Bpm);
+            }
 
             int valuesRange = maxValue - minValue;
             IList<Segment> segments = new List<Segment>();

@@ -3,8 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:HeartRate">
     <Window.Resources>
-        <local:BmpsToSegmentsConverter x:Key="BpmsToSegmentsConverter"/>
+        <local:HRDataToSegmentsConverter x:Key="HRDataToSegmentsConverter"/>
         <local:PointToMarginConverter x:Key="PointToMarginConverter"/>
+        <local:HRDataToPointsConverter x:Key="HRDataToPointsConverter"/>
+        <local:PointToMarginLeftConverter x:Key="PointToMarginLeftConverter"/>
+        <local:HRDataToTimeDisplayConverter x:Key="HRDataToTimeDisplayConverter"/>
+        <local:HRDataToLeftMarginConverter x:Key="HRDataToLeftMarginConverter"/>
     </Window.Resources>
     <Grid Background="White">
         <Border x:Name="GraphBorder" Height="300" Width="500" BorderBrush="Black" BorderThickness="1">
@@ -14,12 +18,12 @@
                 </Canvas.LayoutTransform>
                 <ItemsControl>
                     <ItemsControl.ItemsSource>
-                    <MultiBinding Converter="{StaticResource BpmsToSegmentsConverter}">
+                    <MultiBinding Converter="{StaticResource HRDataToSegmentsConverter}">
                         <Binding Path="MaxValue"/>
                         <Binding Path="MinValue"/>
                         <Binding ElementName="GraphBorder" Path="ActualHeight"/>
                         <Binding ElementName="GraphBorder" Path="ActualWidth"/>
-                        <Binding Path="Bpms"/>
+                        <Binding Path="HRData"/>
                     </MultiBinding>
                 </ItemsControl.ItemsSource>
                 <ItemsControl.ItemsPanel>
@@ -35,12 +39,34 @@
               </ItemsControl>
                 <ItemsControl>
                     <ItemsControl.ItemsSource>
-                        <MultiBinding Converter="{StaticResource BpmsToSegmentsConverter}">
+                        <MultiBinding Converter="{StaticResource HRDataToPointsConverter}">
                             <Binding Path="MaxValue"/>
                             <Binding Path="MinValue"/>
                             <Binding ElementName="GraphBorder" Path="ActualHeight"/>
                             <Binding ElementName="GraphBorder" Path="ActualWidth"/>
-                            <Binding Path="Bpms"/>
+                            <Binding Path="HRData"/>
+                        </MultiBinding>
+                    </ItemsControl.ItemsSource>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Width="1" Height="{Binding ElementName=GraphBorder, Path=ActualHeight}" Background="Cyan"
+                                    Margin="{Binding Converter={StaticResource PointToMarginLeftConverter}}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl>
+                    <ItemsControl.ItemsSource>
+                        <MultiBinding Converter="{StaticResource HRDataToPointsConverter}">
+                            <Binding Path="MaxValue"/>
+                            <Binding Path="MinValue"/>
+                            <Binding ElementName="GraphBorder" Path="ActualHeight"/>
+                            <Binding ElementName="GraphBorder" Path="ActualWidth"/>
+                            <Binding Path="HRData"/>
                         </MultiBinding>
                     </ItemsControl.ItemsSource>
                     <ItemsControl.ItemsPanel>
@@ -52,6 +78,28 @@
                         <DataTemplate>
                             <Border CornerRadius="5" Width="10" Height="10" Background="Orange"
                                     Margin="{Binding Converter={StaticResource PointToMarginConverter}}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl ItemsSource="{Binding HRData}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource HRDataToTimeDisplayConverter}}" 
+                                       Width="50" FontSize="14" Foreground="Red">
+                                <TextBlock.Margin>
+                                    <MultiBinding Converter="{StaticResource HRDataToLeftMarginConverter}">
+                                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}" 
+                                                 Path="Items.Count"/>
+                                        <Binding />
+                                        <Binding ElementName="GraphBorder" Path="ActualWidth"/>
+                                    </MultiBinding>
+                                </TextBlock.Margin>
+                            </TextBlock>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

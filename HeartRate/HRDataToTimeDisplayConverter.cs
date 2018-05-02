@@ -4,17 +4,18 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Data;
 
 namespace HeartRate
 {
-    public class PointToMarginConverter : IValueConverter
+    public class HRDataToTimeDisplayConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Point point = (Point)value;
-            return new Thickness(point.X - 5, point.Y - 5, 0, 0);
+            HRData hrData = (HRData)value;
+
+            return hrData.Time.Minute.ToString() + ":" + hrData.Time.Second.ToString();
+
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
