@@ -23,7 +23,7 @@ namespace HeartRate
             {
                 return new Thickness(-15, graphHeight, 0, 0);
             }
-            double leftMargin = (graphWidth / (itemsCount - 1)) * itemIndex;
+            double leftMargin = (ScaleConverterUtility.GetLeftOffset(graphWidth, itemsCount)) * itemIndex;
             return new Thickness(leftMargin - 15, graphHeight, 0, 0);
         }
 

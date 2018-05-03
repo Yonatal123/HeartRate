@@ -21,6 +21,12 @@ namespace SerialPortDeviceSimulator
                 commConfig = (CommConfig)serializer.Deserialize(file, typeof(CommConfig));
             }
 
+            using (StreamReader file = File.OpenText(@"Config/ValuesConfig.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                m_valuesConfig = (ValuesConfig)serializer.Deserialize(file, typeof(ValuesConfig));
+            }
+
             m_serialPort = new SerialPort(commConfig.SerialPortName);
             m_serialPort.Open();
 
@@ -38,7 +44,7 @@ namespace SerialPortDeviceSimulator
             long dateTimeAsLong = dateTime.ToBinary();
             byte[] nowBytes = BitConverter.GetBytes(dateTimeAsLong);
             Random rnd = new Random();
-            int value = rnd.Next(50, 200);
+            int value = rnd.Next(m_valuesConfig.MinValue, m_valuesConfig.MaxValue);
             byte[] valueBytes = BitConverter.GetBytes(value);
             byte[] joinedBuffer = new byte[nowBytes.Length + valueBytes.Length];
 
@@ -58,6 +64,7 @@ namespace SerialPortDeviceSimulator
         }
 
         private static SerialPort m_serialPort;
+        private static ValuesConfig m_valuesConfig;
     }
 
     

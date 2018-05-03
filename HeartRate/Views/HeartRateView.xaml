@@ -12,16 +12,20 @@
         <local:IndexToScaleValuesConveter x:Key="IndexToScaleValuesConverter"/>
         <local:IndexToTopMarginConverter x:Key="IndexToTopMarginConverter"/>
     </Window.Resources>
-    <Grid Background="White">
-        <Border x:Name="GraphBorder" Height="300" Width="500" BorderBrush="Black" BorderThickness="1">
-            <Canvas Background="Black">
+    <Grid Background="White" HorizontalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Border Height="400" Width="600" CornerRadius="2"  Background="#2D2D30">
+            <Canvas x:Name="GraphCanvas" Background="#1A1A1D" Height="300" Width="500" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <ItemsControl>
                     <ItemsControl.ItemsSource>
                     <MultiBinding Converter="{StaticResource HRDataToSegmentsConverter}">
                         <Binding Path="MaxValue"/>
                         <Binding Path="MinValue"/>
-                        <Binding ElementName="GraphBorder" Path="ActualHeight"/>
-                        <Binding ElementName="GraphBorder" Path="ActualWidth"/>
+                        <Binding ElementName="GraphCanvas" Path="ActualHeight"/>
+                            <Binding ElementName="GraphCanvas" Path="ActualWidth"/>
                         <Binding Path="HRData"/>
                         <Binding Path="NumOfVisibleItems"/>
                    </MultiBinding>
@@ -33,7 +37,8 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Line X1="{Binding From.X}" Y1="{Binding From.Y}" X2="{Binding To.X}" Y2="{Binding To.Y}" Stroke="Green"/>
+                        <Line X1="{Binding From.X}" Y1="{Binding From.Y}" X2="{Binding To.X}" Y2="{Binding To.Y}" 
+                              Stroke="Green" StrokeThickness="2"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
               </ItemsControl>
@@ -45,11 +50,11 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Width="1" Height="{Binding ElementName=GraphBorder, Path=ActualHeight}" Background="Cyan">
+                            <Border Width="0.5" Height="{Binding ElementName=GraphCanvas, Path=ActualHeight}" Background="Cyan">
                                 <Border.Margin>
                                     <MultiBinding Converter="{StaticResource IndexToMarginLeftConverter}">
                                         <Binding/>
-                                        <Binding ElementName="GraphBorder" Path="ActualWidth"/>
+                                        <Binding ElementName="GraphCanvas" Path="ActualWidth"/>
                                         <Binding RelativeSource="{RelativeSource Mode=FindAncestor, 
                                                  AncestorType={x:Type ItemsControl}}" Path="DataContext.NumOfVisibleItems"/>
                                     </MultiBinding>
@@ -67,7 +72,8 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Foreground="Red" Width="25" FontSize="14" HorizontalAlignment="Right">
+                                <TextBlock Foreground="White" Width="25" FontSize="14" 
+                                           HorizontalAlignment="Right">
                                     <TextBlock.Text>
                                         <MultiBinding Converter="{StaticResource IndexToScaleValuesConverter}">
                                             <Binding RelativeSource="{RelativeSource Mode=FindAncestor, 
@@ -80,7 +86,7 @@
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
-                                <Border Width="{Binding ElementName=GraphBorder, Path=ActualWidth}" Height="1" 
+                                <Border Width="{Binding ElementName=GraphCanvas, Path=ActualWidth}" Height="1" 
                                         Background="Cyan" Margin="5, 0, 0, 0"/>
                                 <StackPanel.Margin>
                                     <MultiBinding Converter="{StaticResource IndexToTopMarginConverter}">
@@ -91,7 +97,7 @@
                                         <Binding RelativeSource="{RelativeSource Mode=FindAncestor, 
                                                  AncestorType={x:Type ItemsControl}}" Path="DataContext.MinValue"/>
                                         <Binding/>
-                                        <Binding ElementName="GraphBorder" Path="ActualHeight"/>
+                                        <Binding ElementName="GraphCanvas" Path="ActualHeight"/>
                                         <Binding/>
                                     </MultiBinding>
                                 </StackPanel.Margin>
@@ -104,8 +110,8 @@
                         <MultiBinding Converter="{StaticResource HRDataToPointsConverter}">
                             <Binding Path="MaxValue"/>
                             <Binding Path="MinValue"/>
-                            <Binding ElementName="GraphBorder" Path="ActualHeight"/>
-                            <Binding ElementName="GraphBorder" Path="ActualWidth"/>
+                            <Binding ElementName="GraphCanvas" Path="ActualHeight"/>
+                            <Binding ElementName="GraphCanvas" Path="ActualWidth"/>
                             <Binding Path="HRData"/>
                             <Binding Path="NumOfVisibleItems"/>
                         </MultiBinding>
@@ -117,8 +123,10 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border CornerRadius="5" Width="10" Height="10" Background="Orange"
-                                    Margin="{Binding Converter={StaticResource PointToMarginConverter}}"/>
+                            <Grid Margin="{Binding Converter={StaticResource PointToMarginConverter}}">
+                                <Border CornerRadius="10" Width="15" Height="15" Background="Transparent" BorderThickness="1" BorderBrush="Orange"/>
+                                <Border CornerRadius="5" Width="10" Height="10" Background="Orange"/>
+                            </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -131,14 +139,14 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Converter={StaticResource HRDataToTimeDisplayConverter}}" 
-                                       Width="50" FontSize="14" Foreground="Red">
+                                       Width="50" FontSize="12" Foreground="White">
                                 <TextBlock.Margin>
                                     <MultiBinding Converter="{StaticResource HRDataToLeftMarginConverter}">
                                         <Binding RelativeSource="{RelativeSource Mode=FindAncestor, 
                                                  AncestorType={x:Type ItemsControl}}" Path="DataContext.NumOfVisibleItems"/>
                                         <Binding />
-                                        <Binding ElementName="GraphBorder" Path="ActualWidth"/>
-                                        <Binding ElementName="GraphBorder" Path="ActualHeight"/>
+                                        <Binding ElementName="GraphCanvas" Path="ActualWidth"/>
+                                        <Binding ElementName="GraphCanvas" Path="ActualHeight"/>
                                     </MultiBinding>
                                 </TextBlock.Margin>
                             </TextBlock>
@@ -147,6 +155,16 @@
                 </ItemsControl>
             </Canvas>
         </Border>
+        <StackPanel Grid.Column="1" Margin="10, 0, 0, 0" Height="400">
+            <Border CornerRadius="2" Background="Black" Width="150" Height="50">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding LastBpmValue}" Foreground="Orange" FontWeight="Bold" FontSize="20"/>
+                    <TextBlock Margin="5, 0, 0, 0" Text="bpm" Foreground="Orange" FontWeight="Bold" FontSize="20"/>
+                </StackPanel>
+            </Border>
+            <Button Margin="0, 10, 0, 0" Width="80" HorizontalAlignment="Left" Content="START"  Command="{Binding StartListeningCommand}"/>
+            <Button Margin="0, 5, 0, 0" Width="80" HorizontalAlignment="Left" Content="STOP" Command="{Binding StopListeningCommand}"/>
+        </StackPanel>
     </Grid>
 
 </Window>

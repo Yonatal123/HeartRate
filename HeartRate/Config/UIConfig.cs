@@ -12,5 +12,8 @@ namespace HeartRate
         public int MinValue { get; set; }
         public int NumOfVisibleItems { get; set; }
         public string SerialPortName { get; set; }
+        public int SamplingFrequencyInSeconds { get; set; }
+        public bool UseSerialPortSimulator { get; set; }
+        public int StopListeningTimeInMinutes { get; set; }
     }
 }

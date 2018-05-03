@@ -21,9 +21,9 @@ namespace HeartRate
             int valuesSpan = maxValue - minValue;
 
             double itemValue = ((valuesSpan / numOfVisibleItems) * index) + minValue;
-            double normalizedValue = graphHeight - ((itemValue - minValue) * (graphHeight / valuesSpan));
+            double normalizedValue = ScaleConverterUtility.GetTopOffset(graphHeight, (int)itemValue, minValue, maxValue);
 
-            return new Thickness(-30, normalizedValue - 15, 0, 0);
+            return new Thickness(-30, normalizedValue - 10, 0, 0);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

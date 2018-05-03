@@ -34,12 +34,12 @@ namespace HeartRate
                 Point point = new Point();
                 if (i == 0)
                 {
-                    point = new Point(0, graphHeight - ((bpms[i] - minValue) * (graphHeight / valuesRange)));
+                    point = new Point(0, ScaleConverterUtility.GetTopOffset(graphHeight, bpms[i], minValue, maxValue));
                 }
                 else
                 {
-                    point = new Point(normalizedToGraphBpms[i - 1].X + (graphWidth / (numOfVisibleItems - 1)), 
-                        graphHeight - ((bpms[i] - minValue) * (graphHeight / valuesRange)));
+                    point = new Point(normalizedToGraphBpms[i - 1].X + (ScaleConverterUtility.GetLeftOffset(graphWidth, numOfVisibleItems)),
+                        ScaleConverterUtility.GetTopOffset(graphHeight, bpms[i], minValue, maxValue));
                 }
                 normalizedToGraphBpms.Add(point);
             }

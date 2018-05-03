@@ -17,7 +17,7 @@ namespace HeartRate
             double graphWidth = (double)values[1];
             int numOfVisibleItems = (int)values[2];
 
-            double leftMargin = (graphWidth / (numOfVisibleItems - 1)) * index;
+            double leftMargin = (ScaleConverterUtility.GetLeftOffset(graphWidth, numOfVisibleItems)) * index;
             return new Thickness(leftMargin - 5, 0, 0, 0);
         }
 
