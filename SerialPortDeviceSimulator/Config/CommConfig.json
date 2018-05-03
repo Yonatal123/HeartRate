@@ -1,0 +1,4 @@
+﻿{
+  "SerialPortName": "COM21",
+  "SendFrequencyInSeconds" :  3
+}

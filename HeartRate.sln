@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.13
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeartRate", "HeartRate\HeartRate.csproj", "{D13BC3B6-CEC2-4597-A19E-D35FAA93B17B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialPortDeviceSimulator", "SerialPortDeviceSimulator\SerialPortDeviceSimulator.csproj", "{2E0FD123-2559-4143-A5E0-B03AB33FEDD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{D13BC3B6-CEC2-4597-A19E-D35FAA93B17B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D13BC3B6-CEC2-4597-A19E-D35FAA93B17B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D13BC3B6-CEC2-4597-A19E-D35FAA93B17B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E0FD123-2559-4143-A5E0-B03AB33FEDD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E0FD123-2559-4143-A5E0-B03AB33FEDD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E0FD123-2559-4143-A5E0-B03AB33FEDD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E0FD123-2559-4143-A5E0-B03AB33FEDD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

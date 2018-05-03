@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
+using System.Windows.Input;
 
 namespace HeartRate
 {
@@ -22,7 +23,7 @@ namespace HeartRate
             }
         }
 
-        public ObservableCollection<HRData> HRData
+          public ObservableCollection<HRData> HRData
         {
             get
             {

@@ -1,5 +1,6 @@
 ﻿{
   "MaxValue": 200,
   "MinValue": 50,
-  "NumOfVisibleItems": 10
+  "NumOfVisibleItems": 10,
+  "SerialPortName" : "COM20"
 }

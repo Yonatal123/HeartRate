@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HeartRate
+namespace SerialPortDeviceSimulator
 {
-    public class UIConfig
+    public class CommConfig
     {
-        public int MaxValue { get; set; }
-        public int MinValue { get; set; }
-        public int NumOfVisibleItems { get; set; }
         public string SerialPortName { get; set; }
+        public int SendFrequencyInSeconds { get; set; }
     }
 }
